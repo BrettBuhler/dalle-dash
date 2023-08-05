@@ -1,0 +1,7 @@
+POST http://localhost:5000/api/updatetoken
+Content-Type: application/json
+
+{
+    "id": 7,
+    "tokens": 40
+}
