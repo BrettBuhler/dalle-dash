@@ -1,5 +1,17 @@
 const express = require ("express")
+const session = require('express-session')
+require('dotenv').config()
 const app = express()
+
+
+app.use(
+    session({
+        secret: process.env.PASSPORT_SECRET,
+        resave: false,
+        saveUninitialized: false,
+    })
+)
+require('./config/passportConfig.js')(app)
 
 const mainRoutes = require('./routes/mainRoutes.js')
 const apiRoutes = require('./routes/apiRoutes.js')

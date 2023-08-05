@@ -10,10 +10,14 @@ router.get('/', (req, res) => {
 })
 
 router.get("/login", (req, res) => {
-    res.sendFile(path.join(__dirname, '../public', 'index.html'))
+    res.sendFile(path.join(__dirname, '../build', 'index.html'))
 })
 
-router.get('/dash', ensureAuth, (req, res) => {
+router.get("/signup", (req, res) => {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'))
+})
+
+router.get('/dashboard', ensureAuth, (req, res) => {
     res.sendFile(path.join(__dirname, "../build", "index.html"))
 })
 
