@@ -58,7 +58,7 @@ module.exports = {
             console.log("Error in addUser:", error)
             return null
         } else {
-            return data
+            return data[0]
         }
     },
     updateTokensById: async (id, tokens) => {

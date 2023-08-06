@@ -12,4 +12,8 @@ router.post('/updatetoken', userController.updateToken)
 
 router.post('/getauth', userController.getAuth)
 
+router.post('/genimage', userController.genImage)
+
+router.post('/saveimg', userController.saveImg)
+
 module.exports = router

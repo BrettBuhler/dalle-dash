@@ -1,0 +1,9 @@
+POST http://localhost:5000/api/genimage
+Content-Type: application/json
+
+{
+    "id": 9,
+    "prompt": "a yellow bee trying to climb up a deranged hamster",
+    "n": 1,
+    "size": "512x512"
+}
