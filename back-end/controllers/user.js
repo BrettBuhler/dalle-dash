@@ -121,6 +121,7 @@ module.exports = {
                 size: size
             })
             if (response.data.data) {
+                return res.status(200).json({url: response.data.data[0].url})
                 const urlArray = response.data.data
                     const imageData = await downloadImage(urlArray[0].url)
                     const filename = `image_${Date.now()}.jpg`
@@ -130,13 +131,39 @@ module.exports = {
                         console.log("publicURL",publicURL)
                     if (error) {
                         console.error(error)
+                    } else {
+                        User.addImage(id, prompt, filename)
                     }
             }
-            console.log("res data data", response.data.data)
-            return res.status(200).json({message: "ok"})
         } catch (error) {
             console.error(error)
             return res.status(500).json({error: "Internal Server Error"})
+        }
+    },
+    addImgToDb: async (req, res) => {
+        try {
+            const {id, prompt, url} = req.body
+            const imageData = await downloadImage(url)
+            const filename = `image_${Date.now()}.jpg`
+            const { publicURL, error } = await supabase.storage
+                .from('images')
+                .upload(filename, imageData)
+                if (error) {
+                    console.error(error)
+                    return res.status(500).json({error: error, message: "server error adding image to storage"})
+                } else {
+                    const didAdd = await User.addImage(id, prompt, filename)
+                    if (didAdd) {
+                        console.log('image added')
+                    } else {
+                        console.log('image db upload failed')
+                    }
+                    return res.status(200).json({message: `${didAdd ? "success" : "failed"}`})
+                }
+
+        } catch (error) {
+            console.error("Catch Error:", error)
+            return res.status(500).json({error: error})
         }
     },
     saveImg : async (req, res) => {
@@ -151,5 +178,22 @@ module.exports = {
             console.log('er', err)
             return res.status(500)
         }
+    },
+    getImage: async (req, res) => {
+        try{
+            const {img_name} = req.body
+            console.log(img_name)
+            const {data, error} = await supabase.storage.from('images').createSignedUrl(`/${img_name}`, 600)
+            if (error) {
+                console.log('getImage err:', error)
+                return res.status(500).json({err: error})
+            }
+            console.log(data)
+
+            return res.status(200).json({data: data})
+            } catch (error) {
+                console.log("Catch Error:", error)
+                res.status(500).json({CatchError: error})
+            }
     }
 }

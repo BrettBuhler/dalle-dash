@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "id": 9,
-    "prompt": "a yellow bee trying to climb up a deranged hamster",
+    "prompt": "a green slug climbing mount everest. remember the summers of childhood in the style of childrens show",
     "n": 1,
     "size": "512x512"
 }

@@ -86,5 +86,20 @@ module.exports = {
         }
         const resUser = await GET_USER_BY_ID(id)
         return resUser
-    }   
+    },
+    addImage: async (id, prompt, fileName) => {
+        const {data, error} = await supabase
+            .from('image_base')
+            .insert({
+                user_id: id,
+                prompt: prompt,
+                file_name: fileName
+            })
+        if (error) {
+            console.error(error)
+            return false
+        }
+        console.log('Added new image to table')
+        return true
+    }
 }

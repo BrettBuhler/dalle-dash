@@ -1,0 +1,34 @@
+.gallery-container {
+    display: flex;
+  }
+  
+  .main-image {
+    flex: 1;
+    max-width: 512px;
+    max-height: 512px;
+  }
+  
+  .large-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Adjust this as needed: contain, cover, etc. */
+  }
+  
+  .small-images,
+  .mirror-images {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .small-image {
+    flex: 1;
+    margin: 2px;
+  }
+  
+  .small-img,
+  .mirror-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Adjust this as needed: contain, cover, etc. */
+  }

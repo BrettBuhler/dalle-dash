@@ -16,4 +16,8 @@ router.post('/genimage', userController.genImage)
 
 router.post('/saveimg', userController.saveImg)
 
+router.post('/getimage', userController.getImage)
+
+router.post('/uploadimage', userController.addImgToDb)
+
 module.exports = router

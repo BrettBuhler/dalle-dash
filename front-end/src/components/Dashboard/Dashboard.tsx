@@ -64,6 +64,7 @@ const Dashboard = () => {
             <button onClick={handleLogout}>Log out</button>
             <button onClick={()=>console.log(user)}>Get User</button>
             <button onClick={toggleDarkMode}>Dark toggle</button>
+            <button onClick={()=>navigate("/generate")}>genimg</button>
         </div>
     )
 }

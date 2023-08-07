@@ -1,0 +1,6 @@
+POST http://localhost:5000/api/getimage
+Content-Type: application/json
+
+{
+    "img_name": "image_1691293596240.jpg"
+}

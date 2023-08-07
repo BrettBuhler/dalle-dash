@@ -21,4 +21,8 @@ router.get('/dashboard', ensureAuth, (req, res) => {
     res.sendFile(path.join(__dirname, "../build", "index.html"))
 })
 
+router.get('/generate', ensureAuth, (req, res) => {
+    res.sendFile(path.join(__direname, "../build", 'index.html'))
+})
+
 module.exports = router
