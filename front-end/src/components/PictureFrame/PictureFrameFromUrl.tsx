@@ -25,6 +25,9 @@ const PictureFrameFromUrl: React.FC<PictureFrameFromUrlProps> = ({ url, h, w }) 
 
     useEffect(()=> {
         setTheme(new Theme(darkMode))
+        if (!theme){
+            console.log('TYPE SCRIPT')
+        }
     }, [darkMode])
 
     useEffect(()=> {
@@ -46,16 +49,24 @@ const PictureFrameFromUrl: React.FC<PictureFrameFromUrlProps> = ({ url, h, w }) 
         },1000)
     }
 
+    const imageStyle: React.CSSProperties = {
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        minWidth: `${w}px`,
+        minHeight: `${h}px`,
+      }
+
     return (
-        <div style={{height: `${h}px`, width: `${w}px`, border: `5px solid #${theme.dark}`, position: 'relative'}}>
+        <div style={{height: `${h}px`, width: `${w}px`, maxWidth: `${w}px`, maxHeight: `${h}px`, position: 'relative'}}>
             {isLoading && (
                 <div style={{height: "100%", width: "100%", position: "absolute", top: 0, left: 0, opacity: loadFade ? 0 : 1, transition: 'opacity 1s ease-in-out', zIndex: 10}}>
                     <Loading />
                 </div>
             )}
             {imgUrl && (
-                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: `${h}px`, width: `${w}px`, overflow: 'hidden', position: 'relative'}}>
-                    <img src={imgUrl} alt="Picture by AI" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: `100%`, width: `100%`, overflow: 'hidden', position: 'relative'}}>
+                    <img src={imgUrl} alt="Picture by AI" style={imageStyle} />
                 </div>
             )}
         </div>

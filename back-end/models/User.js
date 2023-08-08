@@ -101,5 +101,16 @@ module.exports = {
         }
         console.log('Added new image to table')
         return true
+    },
+    getImageById: async (id) => {
+        const {data, error} = await supabase
+            .from('image_base')
+            .select('file_name')
+            .eq('user_id', id)
+        if (error) {
+            console.log('Error in getImageById:', error)
+            return false
+        }
+        return data.map(item => item.file_name)
     }
 }

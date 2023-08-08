@@ -13,7 +13,7 @@ const HomePage: React.FC = ({}) => {
             <div style={{display: 'flex', gap:10}}>
             {/*imageArray.map((url)=><PictureFrameFromDB img_name={url} h={400} w={400}/>)*/}
             </div>
-            <Gallery />
+            <Gallery userId={21}/>
         </div>
     )
 }

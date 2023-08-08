@@ -23,6 +23,26 @@ const PictureFrameFromDB: React.FC<PictureFrameFromDBProps> = ({ img_name, h, w 
             setDidRender(true)
         }
     },[])
+    if (theme.dark === 'green') console.log('typescript error')
+    useEffect(()=>{
+        if (img_name !== ""){
+            const getImageByName = async (url: string) => {
+                const response = await getImage(url)
+                if (response){
+                    const image = new Image()
+                    image.src = response
+                    image.onload = () => {
+                        setTempImageUrl(response)
+                        loadingFade()
+                    }
+                }
+            }
+            if (isLoading) {
+                console.log("fetching data")
+                getImageByName(img_name)
+            }
+        }
+    }, [img_name])
 
     useEffect(()=> {
         const getImageByName = async (url: string) => {
@@ -36,7 +56,7 @@ const PictureFrameFromDB: React.FC<PictureFrameFromDBProps> = ({ img_name, h, w 
                 }
             }
         }
-        if (isLoading && !didRender) {
+        if (isLoading && !didRender && img_name != "") {
             console.log("fetching data")
             getImageByName(img_name)
         }
@@ -54,8 +74,16 @@ const PictureFrameFromDB: React.FC<PictureFrameFromDBProps> = ({ img_name, h, w 
         },1000)
     }
 
+    const imageStyle: React.CSSProperties = {
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        minWidth: `${w}px`,
+        minHeight: `${h}px`,
+      }
+
     return (
-        <div style={{height: `${h}px`, width: `${w}px`, border: `5px solid #${theme.dark}`, position: 'relative'}}>
+        <div style={{height: `${h}px`, width: `${w}px`, position: 'relative'}}>
             {isLoading && (
                 <div style={{height: "100%", width: "100%", position: "absolute", top: 0, left: 0, opacity: loadFade ? 0 : 1, transition: 'opacity 1s ease-in-out', zIndex: 10}}>
                     <Loading />
@@ -63,7 +91,7 @@ const PictureFrameFromDB: React.FC<PictureFrameFromDBProps> = ({ img_name, h, w 
             )}
             {tempImageUrl && (
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: `${h}px`, width: `${w}px`, overflow: 'hidden', position: 'relative'}}>
-                    <img src={tempImageUrl} alt="Picture by AI" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                    <img src={tempImageUrl} alt="Picture by AI" style={imageStyle} />
                 </div>
             )}
         </div>

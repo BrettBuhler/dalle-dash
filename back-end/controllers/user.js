@@ -122,18 +122,6 @@ module.exports = {
             })
             if (response.data.data) {
                 return res.status(200).json({url: response.data.data[0].url})
-                const urlArray = response.data.data
-                    const imageData = await downloadImage(urlArray[0].url)
-                    const filename = `image_${Date.now()}.jpg`
-                    const { publicURL, error } = await supabase.storage
-                        .from('images')
-                        .upload(filename, imageData)
-                        console.log("publicURL",publicURL)
-                    if (error) {
-                        console.error(error)
-                    } else {
-                        User.addImage(id, prompt, filename)
-                    }
             }
         } catch (error) {
             console.error(error)
@@ -195,5 +183,15 @@ module.exports = {
                 console.log("Catch Error:", error)
                 res.status(500).json({CatchError: error})
             }
+    },
+    getImagesById: async (req, res) => {
+        const {id} = req.body
+        try {
+            const response = await User.getImageById(id)
+            return res.status(200).json({'data': response})
+        } catch (error) {
+            console.log('catch error:', error)
+            return res.status(500).json({'error': error})
+        }
     }
 }
