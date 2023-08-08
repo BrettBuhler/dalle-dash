@@ -193,5 +193,14 @@ module.exports = {
             console.log('catch error:', error)
             return res.status(500).json({'error': error})
         }
+    },
+    getImagesNoId: async (req, res) => {
+        try {
+            const response = await User.getImageNoId()
+            return res.status(200).json({'data': response})
+        } catch (error) {
+            console.log('catch error:', error)
+            return res.status(500).json({'error': error})
+        }
     }
 }

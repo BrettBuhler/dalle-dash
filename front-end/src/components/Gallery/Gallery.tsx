@@ -5,6 +5,7 @@ import Theme from '../../utils/themeProvider'
 import "./GalleryStyles.css"
 
 import getImgUrlsById from '../../utils/getImgUrlsById'
+import getImgUrlsNoId from '../../utils/getImgUrlsNoId'
 
 interface GalleryProps {
     userId?: number
@@ -23,16 +24,39 @@ const Gallery: React.FC<GalleryProps> = ({userId}) => {
     const [getImgFail, setGetImgFail] = useState(false)
     const [noImage, setNoImage] = useState(false)
     const [noImageOpacity, setNoImageOpacity] = useState(0)
+    const [galleryPosition, setGalleryPosition] = useState(0)
+    const [galleryIndexs, setGalleryIndexs] = useState<number[]>([])
+    const [firstUrls, setFirstUrls] = useState(false)
+
+    useEffect(() => {
+        if (imageUrls.length > 0) {
+            const newGalleryIndexs = [getImageIndex(0), getImageIndex(1), getImageIndex(2), getImageIndex(3), getImageIndex(4)]
+            setGalleryIndexs(newGalleryIndexs)
+        }
+    }, [galleryPosition])
+
+    useEffect(()=> {
+        if (imageUrls.length > 0) {
+            const newGalleryIndexs = [getImageIndex(0), getImageIndex(1), getImageIndex(2), getImageIndex(3), getImageIndex(4)]
+            setGalleryIndexs(newGalleryIndexs)
+            setFirstUrls(true)
+        }
+    }, [imageUrls])
 
     useEffect(()=>{
         setTheme(new Theme(darkMode))
     },[darkMode])
 
     const getImageIndex = (n: number):number => {
-        if (n >= imageUrls.length){
-            return n % imageUrls.length
+        if (galleryPosition >= 0) {
+            if (galleryPosition + n >= imageUrls.length){
+                return (galleryPosition + n) % imageUrls.length
+            } else {
+                return galleryPosition + n
+            }
         } else {
-            return n
+            const effectiveIndex = galleryPosition - n
+            return (effectiveIndex % imageUrls.length + imageUrls.length) % imageUrls.length
         }
     }
 
@@ -60,10 +84,32 @@ const Gallery: React.FC<GalleryProps> = ({userId}) => {
                 setGetImgFail(true)
             }
         }
+        const getUrlsNoId = async () => {
+            const response = await getImgUrlsNoId()
+            if (response.data) {
+                const arr:string[] = [...response.data]
+                for (let i:number = arr.length - 1; i > 0; i--) {
+                    const j: number = Math.floor(Math.random() * (i + 1))
+                    const mid: string = arr[i]
+                    arr[i] = arr[j]
+                    arr[j] = mid
+                }
+                if (arr.length === 0){
+                    setNoImage(true)
+                    makeVisible()
+                } else {
+                    setImageUrls(arr)
+                }
+            } else {
+                setGetImgFail(true)
+            }
+        }
         if (!didRender){
             toggleRenger()
             if (userId) {
                 getUrlsById()
+            } else {
+                getUrlsNoId()
             }
         }
     },[])
@@ -118,23 +164,28 @@ const Gallery: React.FC<GalleryProps> = ({userId}) => {
             )}
             <div style={{width: '100%', border: '2px solid green', maxWidth: "1200px", display: 'flex', justifyContent: 'center', gap: '5px'}}>
                 <div ref={divRef} style={{height: width ? width: 0, width: '48%', maxWidth: '48%'}}>
-                    <PictureFrameFromDB img_name={imageUrls.length > 0 ? imageUrls[getImageIndex(0)] : ''} h={width?width:0} w={width?width:0}/>
+                    <PictureFrameFromDB img_name={firstUrls ? imageUrls[galleryIndexs[0]] : ''} h={width?width:0} w={width?width:0}/>
                 </div>
                 <div style={{height: width ? width: 0, width: '48%', maxWidth: '48%', display: 'flex', justifyContent: 'center', gap: '10px'}}>
                     <div style={{height: width ? width: 0, width: '48%', maxWidth: '48%'}}>
                         <div ref={smallDivRef} style={{width: '100%', display: 'flex', flexDirection:'column', gap: '10px'}}>
-                            <PictureFrameFromDB img_name={imageUrls.length > 0 ? imageUrls[getImageIndex(1)] : ''} h={width?width/2-5:0} w={smallWidth?smallWidth:0}/>
-                            <PictureFrameFromDB img_name={imageUrls.length > 0 ? imageUrls[getImageIndex(2)] : ''} h={width?width/2-5:0} w={smallWidth?smallWidth:0}/>
+                            <PictureFrameFromDB img_name={firstUrls ? imageUrls[galleryIndexs[1]] : ''} h={width?width/2-5:0} w={smallWidth?smallWidth:0}/>
+                            <PictureFrameFromDB img_name={firstUrls ? imageUrls[galleryIndexs[2]] : ''} h={width?width/2-5:0} w={smallWidth?smallWidth:0}/>
                         </div>
                     </div>
                     <div style={{height: width ? width: 0, width: '48%', maxWidth: '48%'}}>
                         <div ref={smallDivRef} style={{width: '100%', display: 'flex', flexDirection:'column', gap: '10px'}}>
-                            <PictureFrameFromDB img_name={imageUrls.length > 0 ? imageUrls[getImageIndex(3)] : ''} h={width?width/2-5:0} w={smallWidth?smallWidth:0}/>
-                            <PictureFrameFromDB img_name={imageUrls.length > 0 ? imageUrls[getImageIndex(4)] : ''} h={width?width/2-5:0} w={smallWidth?smallWidth:0}/>
+                            <PictureFrameFromDB img_name={firstUrls ? imageUrls[galleryIndexs[3]] : ''} h={width?width/2-5:0} w={smallWidth?smallWidth:0}/>
+                            <PictureFrameFromDB img_name={firstUrls ? imageUrls[galleryIndexs[4]] : ''} h={width?width/2-5:0} w={smallWidth?smallWidth:0}/>
                         </div>
                     </div>
                 </div>
             </div>
+            <button onClick={()=>setGalleryPosition(galleryPosition - 5)}>Back</button>
+            <button onClick={()=>{
+                setGalleryPosition(galleryPosition + 5)
+                console.log(galleryIndexs)
+            }}>Next</button>
         </div>
     )
 }

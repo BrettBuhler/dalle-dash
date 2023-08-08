@@ -17,18 +17,23 @@ const PictureFrameFromDB: React.FC<PictureFrameFromDBProps> = ({ img_name, h, w 
     const [didRender, setDidRender] = useState<boolean>(false)
     const [theme, setTheme] = useState<Theme>(new Theme(darkMode))
     const [tempImageUrl, setTempImageUrl] = useState("")
+    const [lastUrl, setLastUrl] = useState("place holder")
 
     useEffect(()=>{
         if (didRender === false && isLoading){
             setDidRender(true)
         }
     },[])
+    const changeLastUrl = () => {
+        setLastUrl(tempImageUrl)
+    }
     if (theme.dark === 'green') console.log('typescript error')
     useEffect(()=>{
-        if (img_name !== ""){
+        if (img_name !== "" && tempImageUrl != lastUrl){
             const getImageByName = async (url: string) => {
                 const response = await getImage(url)
                 if (response){
+                    changeLastUrl()
                     const image = new Image()
                     image.src = response
                     image.onload = () => {
@@ -37,30 +42,11 @@ const PictureFrameFromDB: React.FC<PictureFrameFromDBProps> = ({ img_name, h, w 
                     }
                 }
             }
-            if (isLoading) {
-                console.log("fetching data")
-                getImageByName(img_name)
-            }
-        }
-    }, [img_name])
-
-    useEffect(()=> {
-        const getImageByName = async (url: string) => {
-            const response = await getImage(url)
-            if (response){
-                const image = new Image()
-                image.src = response
-                image.onload = () => {
-                    setTempImageUrl(response)
-                    loadingFade()
-                }
-            }
-        }
-        if (isLoading && !didRender && img_name != "") {
             console.log("fetching data")
+            setIsLoading(true)
             getImageByName(img_name)
         }
-    }, [didRender])
+    }, [img_name])
 
     useEffect(()=> {
         setTheme(new Theme(darkMode))

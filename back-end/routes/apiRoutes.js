@@ -22,4 +22,6 @@ router.post('/uploadimage', userController.addImgToDb)
 
 router.post('/getimagesbyid', userController.getImagesById)
 
+router.post('/getimagesnoid', userController.getImagesNoId)
+
 module.exports = router

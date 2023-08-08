@@ -112,5 +112,15 @@ module.exports = {
             return false
         }
         return data.map(item => item.file_name)
+    },
+    getImageNoId: async () => {
+        const {data, error} = await supabase
+            .from('image_base')
+            .select('file_name')
+        if (error) {
+            console.log('Error in getImageNoId:', error)
+            return false
+        }
+        return data.map(item => item.file_name)
     }
 }
