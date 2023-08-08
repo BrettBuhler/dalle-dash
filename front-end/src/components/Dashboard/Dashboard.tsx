@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useAppContext } from '../AppContext'
 
 import Loading from '../Loading/Loading'
+import Tokens from '../Tokens/Tokens'
 
 import Theme from '../../utils/themeProvider'
 import logout from "../../utils/logout"
@@ -55,6 +56,7 @@ const Dashboard = () => {
 
     return (
         <div style={{backgroundColor: `#${theme.light}`, position: 'relative'}}>
+            <Tokens />
             {isLoading && (
                 <div style={{height: "100vh", width: "100vw", position: "absolute", top: 0, left: 0, opacity: loadFade ? 0 : 1, transition: 'opacity 1s ease-in-out'}}>
                     <Loading />
