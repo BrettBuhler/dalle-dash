@@ -1,15 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../AppContext'
-import { useState } from 'react'
 import UserObject from '../../utils/userObject'
 import login from '../../utils/login'
-import MetaPrompt from '../MetaPrompt/MetaPrompt'
+
+import Sidebar from '../Sidebar/Sidebar'
 
 
 const HomePage: React.FC = ({}) => {
     const {setUser} = useAppContext()
-    const [textValue, setTextValue] = useState('')
-    const [isVis, setIsVis] = useState(false)
     const navigate = useNavigate()
 
     const handleLogin = async () => {
@@ -32,18 +30,11 @@ const HomePage: React.FC = ({}) => {
     }
     
     return (
-        <div>
+        <div style={{position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <h1>HOME</h1>
             <button onClick={()=>navigate('/login')}>Log In</button>
             <button onClick={()=>navigate('/signup')}>Sign Up</button>
             <button onClick={handleLogin}>TEST ACCOUNT</button>
-            <button onClick={()=>setIsVis(!isVis)}>Text meta prompt</button>
-            <div style={{display: 'flex', gap:10}}>
-            </div>
-            <textarea value={textValue}/>
-            <div style={{position: 'relative'}}>
-                <MetaPrompt setText={setTextValue} isVisible={isVis} setIsVisible={setIsVis}/>
-            </div>
         </div>
     )
 }
