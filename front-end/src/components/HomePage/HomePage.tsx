@@ -1,12 +1,15 @@
 import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../AppContext'
+import { useState } from 'react'
 import UserObject from '../../utils/userObject'
 import login from '../../utils/login'
-//import PictureFrameFromDB from '../PictureFrame/PictureFrameFromDB'
-import Gallery from '../Gallery/Gallery'
+import MetaPrompt from '../MetaPrompt/MetaPrompt'
+
 
 const HomePage: React.FC = ({}) => {
     const {setUser} = useAppContext()
+    const [textValue, setTextValue] = useState('')
+    const [isVis, setIsVis] = useState(false)
     const navigate = useNavigate()
 
     const handleLogin = async () => {
@@ -34,9 +37,13 @@ const HomePage: React.FC = ({}) => {
             <button onClick={()=>navigate('/login')}>Log In</button>
             <button onClick={()=>navigate('/signup')}>Sign Up</button>
             <button onClick={handleLogin}>TEST ACCOUNT</button>
+            <button onClick={()=>setIsVis(!isVis)}>Text meta prompt</button>
             <div style={{display: 'flex', gap:10}}>
             </div>
-            <Gallery />
+            <textarea value={textValue}/>
+            <div style={{position: 'relative'}}>
+                <MetaPrompt setText={setTextValue} isVisible={isVis} setIsVisible={setIsVis}/>
+            </div>
         </div>
     )
 }

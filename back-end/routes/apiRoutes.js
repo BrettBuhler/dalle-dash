@@ -26,4 +26,6 @@ router.post('/getimagesnoid', userController.getImagesNoId)
 
 router.post('/addpayment', userController.addPayment)
 
+router.post('/metaprompt', userController.metaPrompt)
+
 module.exports = router

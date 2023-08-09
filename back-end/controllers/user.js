@@ -219,5 +219,27 @@ module.exports = {
             console.log('catch error:', error)
             return res.status(500).json({error: error})
         }
+    },
+    metaPrompt: async (req, res) => {
+        try {
+            const {prompt} = req.body
+            const configuration = new Configuration({
+                apiKey: process.env.OPEN_AI_KEY,
+            })
+            const openai = new OpenAIApi(configuration)
+            const response = await openai.createChatCompletion({
+                model: 'gpt-3.5-turbo',
+                messages: [{role: "user", content: `Write me a prompt for the DALL-E 2 api that captures the following: ${prompt}`}]
+            })
+            console.log(response.data)
+            if (response.data){
+                return res.status(200).json({data: response.data})
+            } else {
+                return res.status(500).json({data: response})
+            }
+        } catch (error){
+            console.log('catch error', error)
+            return res.status(500).json({error: error})
+        }
     }
 }

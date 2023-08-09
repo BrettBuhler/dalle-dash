@@ -7,6 +7,8 @@ import Dashboard from './components/Dashboard/Dashboard'
 import GenerateImage from './components/GenerateImage/GenerateImage'
 import Shop from './components/Shop/Shop'
 
+import './index.css'
+
 const App = () => {
 
     return (
