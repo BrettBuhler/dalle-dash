@@ -4,18 +4,18 @@ const stripe = require('stripe')(process.env.STRIPE_KEY)
 const router = express()
 const endpointSecret = (process.env.ENDPOINT_SECRET)
 const axios = require('axios')
+const User = require('../models/User.js')
 
 router.post('/webhook', express.raw({type: 'application/json'}), async (request, response) => {
-    console.log('im alive')
-    const sig = request.headers['stripe-signature'];
+    const sig = request.headers['stripe-signature']
   
-    let event;
+    let event
   
     try {
-      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
+      event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret)
     } catch (err) {
         console.log('catch err', err)
-      response.status(400).send(`Webhook Error here: ${err.message}`);
+      response.status(400).send(`Webhook Error: ${err.message}`)
       return;
     }
   
@@ -27,26 +27,24 @@ router.post('/webhook', express.raw({type: 'application/json'}), async (request,
         break;
       // ... handle other event types
       case 'checkout.session.completed':
+        console.log(event.data.object)
         const user_id = event.data.object.metadata.user_id
         const total = 500
-        const payment_email = "test"//event.data.customer_details.email
+        const payment_email = event.data.object.customer_details.email
         console.log('total:',total, 'payment_email:', payment_email, 'user_id', parseInt(user_id))
         try {
-            const res1 = await axios.post('https://dalle-dash.uc.r.appspot.com/api/updatetoken', {id: parseInt(user_id), tokens: 50})
-            const res2 = await axios.post('https://dalle-dash.uc.r.appspot.com/api/addpayment', {user_id: parseInt(user_id), payment_email: payment_email, cents_cad: total})
-            if (res1 && res2){
-                response.status(200).send('tokens added and payment added')
-            }
+            const res1 = await User.updateTokensById(parseInt(user_id), 50)
+            const res2 = await User.addPayment(parseInt(user_id), payment_email, total)
         } catch (error) {
             console.log('catch error in web hook:', error)
         }
         break
       default:
-        console.log(`Unhandled event type ${event.type}`);
+        console.log(`Unhandled event type ${event.type}`)
     }
   
     // Return a 200 response to acknowledge receipt of the event
-    response.send('bottom');
-  });
+    response.send('')
+  })
 
   module.exports = router

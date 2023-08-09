@@ -124,7 +124,6 @@ module.exports = {
         return data.map(item => item.file_name)
     },
     addPayment: async (user_id, payment_email, cents_cad) => {
-        console.log('in USER')
         const {data, error} = await supabase
             .from('payments')
             .insert({

@@ -21,9 +21,10 @@ const webhookRoutes = require('./routes/webhook.js')
 
 app.use(webhookRoutes)
 
-//NOTE STRIPE WEB HOOK ROUTE MUST BE USED BEFORE BODY PARSER
-app.use(express.urlencoded());
 
+
+//NOTE STRIPE WEB HOOK ROUTE MUST BE USED BEFORE BODY PARSER
+app.use(express.urlencoded({ extended: true}))
 app.use(bodyParser.json())
 
 app.use(mainRoutes)
