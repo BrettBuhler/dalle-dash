@@ -5,6 +5,7 @@ import Login from "./components/Login/Login"
 import HomePage from './components/HomePage/HomePage'
 import Dashboard from './components/Dashboard/Dashboard'
 import GenerateImage from './components/GenerateImage/GenerateImage'
+import Shop from './components/Shop/Shop'
 
 const App = () => {
 
@@ -16,7 +17,7 @@ const App = () => {
                 <Route path='/signup' element={ <Signup /> } />
                 <Route path='/dashboard' element={ <Dashboard />} />
                 <Route path='/generate' element={ <GenerateImage />} />
-                <Route path='/shop' element={<div>SHOP</div> } />
+                <Route path='/shop' element={<Shop /> } />
             </Routes>
         </div>
     )

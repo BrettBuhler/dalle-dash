@@ -1,5 +1,6 @@
 const express = require ("express")
 const session = require('express-session')
+const bodyParser = require('body-parser')
 require('dotenv').config()
 const app = express()
 
@@ -15,12 +16,21 @@ require('./config/passportConfig.js')(app)
 
 const mainRoutes = require('./routes/mainRoutes.js')
 const apiRoutes = require('./routes/apiRoutes.js')
+const stripeRoutes = require('./routes/stripeRoutes.js')
+const webhookRoutes = require('./routes/webhook.js')
+
+app.use(webhookRoutes)
 
 //NOTE STRIPE WEB HOOK ROUTE MUST BE USED BEFORE BODY PARSER
-app.use(express.json())
+app.use(express.urlencoded());
+
+app.use(bodyParser.json())
 
 app.use(mainRoutes)
 app.use('/api', apiRoutes)
+app.use(stripeRoutes)
+
+
 app.use(express.static("build"))
 
 const port = process.env.PORT || 5000

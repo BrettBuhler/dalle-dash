@@ -6,6 +6,8 @@ const User = require('../models/User.js')
 const axios = require('axios')
 require('dotenv').config()
 
+const MY_DOMAIN = process.env.MY_DOMAIN
+
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API_KEY)
 
 const getUser = async (userEmail) => {
@@ -201,6 +203,21 @@ module.exports = {
         } catch (error) {
             console.log('catch error:', error)
             return res.status(500).json({'error': error})
+        }
+    },
+    addPayment: async (req, res) => {
+        try {
+            const {user_id, payment_email, cents_cad} = req.body
+            console.log('in addPayment')
+            const response = await User.addPayment(user_id, payment_email, cents_cad)
+            if (response){
+                return res.status(200).json({message: 'payment added'})
+            } else {
+                return res.status(500).json({message: "internal server error failed to add payment"})
+            }
+        } catch (error) {
+            console.log('catch error:', error)
+            return res.status(500).json({error: error})
         }
     }
 }

@@ -24,4 +24,6 @@ router.post('/getimagesbyid', userController.getImagesById)
 
 router.post('/getimagesnoid', userController.getImagesNoId)
 
+router.post('/addpayment', userController.addPayment)
+
 module.exports = router

@@ -1,0 +1,8 @@
+POST http://localhost:5000/api/addpayment
+Content-Type: application/json
+
+{
+    "user_id": 199,
+    "payment_email": "thisisnotanemail@email.com",
+    "cents_cad": 500
+}

@@ -1,0 +1,7 @@
+POST https://dalle-dash.uc.r.appspot.com/webhook
+Content-Type: application/json
+
+{
+    "id": 9,
+    "tokens": 10
+}
