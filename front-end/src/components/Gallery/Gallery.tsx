@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from 'react'
 import { useAppContext } from '../AppContext'
+import { useNavigate } from 'react-router-dom'
 import PictureFrameFromDB from '../PictureFrame/PictureFrameFromDB'
+import StyledButton from '../StyledButton/StyledButton'
 import Theme from '../../utils/themeProvider'
 import "./GalleryStyles.css"
 
@@ -27,6 +29,8 @@ const Gallery: React.FC<GalleryProps> = ({userId}) => {
     const [galleryPosition, setGalleryPosition] = useState(0)
     const [galleryIndexs, setGalleryIndexs] = useState<number[]>([])
     const [firstUrls, setFirstUrls] = useState(false)
+
+    const navigate=useNavigate()
 
     useEffect(() => {
         if (imageUrls.length > 0) {
@@ -59,7 +63,6 @@ const Gallery: React.FC<GalleryProps> = ({userId}) => {
             return (effectiveIndex % imageUrls.length + imageUrls.length) % imageUrls.length
         }
     }
-
 
     useEffect(()=>{
         const getUrlsById = async () => {
@@ -144,25 +147,25 @@ const Gallery: React.FC<GalleryProps> = ({userId}) => {
 
     if (userId) console.log('tylescript error')
     return (
-        <div style={{height: '', flexDirection: 'column', width: '100%', display: 'flex', alignItems: 'center', justifyContent:'center', position:'relative'}}>
+        <div style={{flexDirection: 'column', width: '100%', display: 'flex', alignItems: 'center', justifyContent:'center', position:'relative'}}>
             {getImgFail && (
                 <div style={{position: 'absolute', height: '100%', width: '100%', display: 'flex', alignItems:'center', justifyContent: 'center'}}>
                     <h1>Unable to fetch Images</h1>
                 </div>
             )}
             {noImage && (
-                <div style={{color: 'black', position: 'absolute', height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems:'center', justifyContent: 'center', background:`#${theme.dark}`, zIndex: 20, opacity: noImageOpacity, transition: 'opacity 1s ease-in-out'}}>
-                    <div style={{width: '50%', maxWidth: '600px', background:`#${theme.light}`, display: 'flex', flexDirection:'column', alignItems: 'center', justifyContent:'center', padding: '20px', borderRadius: '20px', boxShadow: '5px 5px 10px rgba(0, 0, 0, 0.3)' }}>
-                        <h2>No Images Saved</h2>
-                        <p>Create images from the make image menu or return to dashboard</p>
+                <div style={{ position: 'absolute', height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems:'center', justifyContent: 'center', background:`#${theme.light}`, zIndex: 20, opacity: noImageOpacity, transition: 'opacity 1s ease-in-out'}}>
+                    <div style={{width: '50%', maxWidth: '600px', background:`#${theme.mid_light}`, display: 'flex', flexDirection:'column', alignItems: 'center', justifyContent:'center', padding: '20px', borderRadius: '20px', boxShadow: '5px 5px 10px rgba(0, 0, 0, 0.3)' }}>
+                        <h2 style={{fontFamily: "monospace", fontWeight: '900', fontSize:'2rem', color: `#${theme.dark}`}}>No Images Saved</h2>
+                        <p style={{marginBottom: '15px', fontFamily: "monospace", fontWeight: '900', fontSize:'1rem', color: `#${theme.dark}`}}>Create images from the make image menu or return to dashboard</p>
                         <div style={{width: '100%', display: 'flex', gap: '10px'}}>
-                            <button style={{flexGrow: 1}}>Make Image</button>
-                            <button style={{flexGrow: 1}}>Dashboard</button>
+                            <StyledButton text={"Make Image"} click={()=>navigate('/generate')}/>
+                            <StyledButton text={"Dashboard"} click={()=>navigate('/dashboard')}/>
                         </div>
                     </div>
                 </div>
             )}
-            <div style={{width: '100%', border: '2px solid green', maxWidth: "1200px", display: 'flex', justifyContent: 'center', gap: '5px'}}>
+            <div style={{width: '100%', maxWidth: "1200px", display: 'flex', justifyContent: 'center', gap: '5px'}}>
                 <div ref={divRef} style={{height: width ? width: 0, width: '48%', maxWidth: '48%'}}>
                     <PictureFrameFromDB img_name={firstUrls ? imageUrls[galleryIndexs[0]] : ''} h={width?width:0} w={width?width:0}/>
                 </div>
@@ -181,11 +184,12 @@ const Gallery: React.FC<GalleryProps> = ({userId}) => {
                     </div>
                 </div>
             </div>
-            <button onClick={()=>setGalleryPosition(galleryPosition - 5)}>Back</button>
-            <button onClick={()=>{
-                setGalleryPosition(galleryPosition + 5)
-                console.log(galleryIndexs)
-            }}>Next</button>
+            <div style={{width: '100%', maxWidth: '1200px', display: 'flex', alignItems: 'center', gap: '10px', margin: '10px'}}>
+                <div style={{width: '1px'}}></div>
+                <StyledButton text="Previous" click={()=>setGalleryPosition(galleryPosition - 5)} />
+                <StyledButton text="Next" click={()=>setGalleryPosition(galleryPosition + 5)} />
+                <div style={{width: '1px'}}></div>
+            </div>
         </div>
     )
 }

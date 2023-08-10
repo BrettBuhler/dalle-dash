@@ -6,7 +6,8 @@ import HomePage from './components/HomePage/HomePage'
 import Dashboard from './components/Dashboard/Dashboard'
 import GenerateImage from './components/GenerateImage/GenerateImage'
 import Shop from './components/Shop/Shop'
-
+import CommunityGallery from './components/Gallery/CommunityGallery'
+import MyGallery from './components/Gallery/MyGallery'
 import './index.css'
 
 const App = () => {
@@ -20,6 +21,8 @@ const App = () => {
                 <Route path='/dashboard' element={ <Dashboard />} />
                 <Route path='/generate' element={ <GenerateImage />} />
                 <Route path='/shop' element={<Shop /> } />
+                <Route path='/communitygallery' element={<CommunityGallery />} />
+                <Route path='/mygallery' element={<MyGallery />} />
             </Routes>
         </div>
     )

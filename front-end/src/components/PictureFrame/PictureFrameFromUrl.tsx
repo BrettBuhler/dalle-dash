@@ -55,6 +55,7 @@ const PictureFrameFromUrl: React.FC<PictureFrameFromUrlProps> = ({ url, h, w }) 
         objectFit: "cover",
         minWidth: `${w}px`,
         minHeight: `${h}px`,
+        boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
       }
 
     return (

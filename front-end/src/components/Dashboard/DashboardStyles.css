@@ -1,0 +1,21 @@
+.dashboard-h1 {
+    font-size: 2rem;
+}
+
+@media (max-width: 465px) {
+    .dashboard-h1 {
+        font-size: 1.5rem
+    }
+}
+
+@media (max-width: 400px) {
+    .dashboard-h1 {
+        font-size: 1.2rem
+    }
+}
+
+@media (max-width: 350px) {
+    .dashboard-h1 {
+        font-size: 1rem
+    }
+}

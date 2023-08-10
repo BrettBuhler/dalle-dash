@@ -13,6 +13,7 @@ import PictureFrameFromUrl from "../PictureFrame/PictureFrameFromUrl"
 import StyledButton from "../StyledButton/StyledButton"
 import MetaPrompt from "../MetaPrompt/MetaPrompt"
 import Loading from "../Loading/Loading"
+import Sidebar from "../Sidebar/Sidebar"
 
 const GenerateImage = () => {
     const {user, setUser, darkMode} = useAppContext()
@@ -33,6 +34,10 @@ const GenerateImage = () => {
                 console.log(width)
                 setGalleryWidth(width)
             }
+        }
+
+        if (!user) {
+            navigate('/dashboard')
         }
 
         if (elementRef.current) {
@@ -106,6 +111,7 @@ const GenerateImage = () => {
         <div style={{display: 'flex', position: 'relative', flexDirection:'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', background: `#${theme.light}`}}>
             <Tokens />
             <MetaPrompt isVisible={isMetaPromptVisible} setIsVisible={setIsMetaPromptVisible} setText={setPrompt}/>
+            <Sidebar />
             {isLoading && (
                 <div style={{height: "100%", width: "100%", position: "fixed", top: 0, left: 0, opacity: loadFade ? 0 : 1, transition: 'opacity 1s ease-in-out', zIndex: 10}}>
                     <Loading />

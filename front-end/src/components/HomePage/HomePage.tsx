@@ -3,7 +3,6 @@ import { useAppContext } from '../AppContext'
 import UserObject from '../../utils/userObject'
 import login from '../../utils/login'
 
-import Sidebar from '../Sidebar/Sidebar'
 
 
 const HomePage: React.FC = ({}) => {

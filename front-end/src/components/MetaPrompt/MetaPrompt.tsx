@@ -61,7 +61,7 @@ const MetaPrompt: React.FC<MetaPromptProps> = ({setText, setIsVisible, isVisible
     }
 
     return (
-        <div style={{position: 'fixed', left: '0', top: '0', height: '100vh', width: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: loadFade ? 0 : 1, transition: 'opacity 1s ease-in-out', background: "linear-gradient(rgba(20,20,20, .5), rgba(20,20,20, .5))"}}>
+        <div style={{position: 'fixed', left: '0', top: '0', height: '100vh', width: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: loadFade ? 0 : 1, transition: 'opacity 1s ease-in-out', background: "linear-gradient(rgba(20,20,20, .5), rgba(20,20,20, .5))", zIndex: 50}}>
             <div style={{border: `2px solid #${theme.dark}`, padding: '10px', width: '60%', maxWidth: '500px', minWidth: '300px', height: '60%', display: 'flex', flexDirection: 'column', alignItems: 'center', overflow: 'auto', background: `#${theme.light}`, borderRadius:5}}>
                 {isLoading && (
                     <div style={{height: "100%", width: "100%", position: "fixed", top: 0, left: 0, opacity: loadFade ? 0 : 1, transition: 'opacity 1s ease-in-out', zIndex: 10}}>

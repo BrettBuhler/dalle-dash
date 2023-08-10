@@ -29,4 +29,12 @@ router.get('/shop', ensureAuth, (req, res) => {
     res.sendFile(path.join(__dirname, "../build", 'index.html'))
 })
 
+router.get('/communitygallery', ensureAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, "../build", 'index.html'))
+})
+
+router.get('/mygallery', ensureAuth, (req, res) => {
+    res.sendFile(path.join(__dirname, "../build", 'index.html'))
+})
+
 module.exports = router
