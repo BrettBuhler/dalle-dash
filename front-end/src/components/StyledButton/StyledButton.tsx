@@ -34,7 +34,8 @@ const StyledButton: React.FC<StyledButtonProps> = ({text, click}) => {
             border: `2px solid #${theme.dark}`,
             borderRadius: '5px',
             boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
-            fontSize: '1rem'
+            fontSize: '1rem',
+            cursor: 'pointer'
         }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}

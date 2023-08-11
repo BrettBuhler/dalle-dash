@@ -1,0 +1,16 @@
+.shop-title{
+    font-size: 1.5rem;
+}
+
+@media (max-width: 500px) {
+    .shop-title{
+        font-size: 1.2rem
+    }
+}
+
+@media (max-width: 400px) {
+    .shop-title{
+        font-size: 1rem
+    }
+}
+

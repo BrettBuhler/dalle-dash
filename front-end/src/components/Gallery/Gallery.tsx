@@ -76,7 +76,6 @@ const Gallery: React.FC<GalleryProps> = ({userId}) => {
                     arr[i] = arr[j]
                     arr[j] = mid
                 }
-                console.log(arr)
                 if (arr.length === 0){
                     setNoImage(true)
                     makeVisible()
@@ -143,9 +142,6 @@ const Gallery: React.FC<GalleryProps> = ({userId}) => {
             setNoImageOpacity(100)
         }, 50)
     }
-
-
-    if (userId) console.log('tylescript error')
     return (
         <div style={{flexDirection: 'column', width: '100%', display: 'flex', alignItems: 'center', justifyContent:'center', position:'relative'}}>
             {getImgFail && (

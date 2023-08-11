@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react"
-import { useAppContext } from "../AppContext"
 import Loading from "../Loading/Loading"
-import Theme from "../../utils/themeProvider"
 import getImage from "../../utils/getImage"
 
 interface PictureFrameFromDBProps {
@@ -11,11 +9,9 @@ interface PictureFrameFromDBProps {
 }
 
 const PictureFrameFromDB: React.FC<PictureFrameFromDBProps> = ({ img_name, h, w }) => {
-    const {darkMode} = useAppContext()
     const [isLoading, setIsLoading] = useState(true)
     const [loadFade, setLoadFade] = useState(false)
     const [didRender, setDidRender] = useState<boolean>(false)
-    const [theme, setTheme] = useState<Theme>(new Theme(darkMode))
     const [tempImageUrl, setTempImageUrl] = useState("")
     const [lastUrl, setLastUrl] = useState("place holder")
 
@@ -27,7 +23,7 @@ const PictureFrameFromDB: React.FC<PictureFrameFromDBProps> = ({ img_name, h, w 
     const changeLastUrl = () => {
         setLastUrl(tempImageUrl)
     }
-    if (theme.dark === 'green') console.log('typescript error')
+
     useEffect(()=>{
         if (img_name !== "" && tempImageUrl != lastUrl){
             const getImageByName = async (url: string) => {
@@ -42,15 +38,10 @@ const PictureFrameFromDB: React.FC<PictureFrameFromDBProps> = ({ img_name, h, w 
                     }
                 }
             }
-            console.log("fetching data")
             setIsLoading(true)
             getImageByName(img_name)
         }
     }, [img_name])
-
-    useEffect(()=> {
-        setTheme(new Theme(darkMode))
-    }, [darkMode])
 
     const loadingFade = () => {
         setLoadFade(true)

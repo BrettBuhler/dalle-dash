@@ -4,22 +4,52 @@ import { useNavigate } from "react-router-dom"
 import Theme from "../../utils/themeProvider"
 import StyledButton from "../StyledButton/StyledButton"
 import coinImg from '../../assets/coins.jpg'
+import getAuth from "../../utils/getAuth"
+
+import './ShopStyles.css'
 
 interface ProductDisplayProps {
     user_id: number
 }
 
 const ProductDisplay: React.FC<ProductDisplayProps> = ({user_id}) => {
-    const {darkMode, user} = useAppContext()
+    const {darkMode, user, setUser} = useAppContext()
     const navigate = useNavigate()
     const [theme, setTheme] = useState(new Theme(darkMode))
+    const [isHovered, setIsHovered] = useState(false)
+    const [isHovered2, setIsHovered2] = useState(false)
+
+    const handleMouseEnter = () => {
+      setIsHovered(true)
+    }
+
+    const handleMouseLeave = () => {
+      setIsHovered(false)
+    }
+
+    const handleMouseEnter2 = () => {
+      setIsHovered2(true)
+    }
+
+    const handleMouseLeave2 = () => {
+      setIsHovered2(false)
+    }
 
     useEffect(() => {
       setTheme(new Theme(darkMode))
     },[darkMode])
+
     useEffect(() => {
+      const getAuthHelper = async () => {
+        const response = await getAuth()
+        if (response.id) {
+          setUser(response)
+        } else {
+          console.error("User is Authenticated but getAuth failed")
+        }
+      }
       if (!user) {
-        navigate('/dashboard')
+        getAuthHelper()
       }
     },[])
 
@@ -32,10 +62,10 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({user_id}) => {
                     style={{maxHeight: '60vh', maxWidth: '40vh', height: '60vh', width: '40vh'}}
                 />
                 <div className="description" style={{display: 'flex', gap: '10px', justifyContent: 'center', alignItems: 'center'}}>
-                    <h3 style={{fontFamily: "monospace", fontWeight: '900', fontSize:'1.5rem', color: `#${theme.light}`, marginBottom: 0}}>Dall E Dash Tokens (50)</h3>
-                    <h5 style={{fontFamily: "monospace", fontWeight: '900', fontSize:'1.2rem', color: `#${theme.light}`, marginBottom: 0}}>$5.00</h5>
+                    <h3 className="shop-title" style={{textAlign: 'center', fontFamily: "monospace", fontWeight: '900', color: `#${theme.light}`,}}>DallE Dash Tokens(50)</h3>
+                    <h3 className="shop-title" style={{fontFamily: "monospace", fontWeight: '900', color: `#${theme.light}`,}}>$5.00</h3>
                 </div>
-                <form action="/create-checkout-session" method="POST">
+                <form action="/create-checkout-session" method="POST" style={{width: '100%'}}>
                   <input
                       type="number"
                       id="user_id"
@@ -44,9 +74,48 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({user_id}) => {
                       readOnly
                       style={{display: 'none'}}
                   />
-                  <button type="submit" role="link">
+                  <div style={{display: 'flex', gap: '10px', width:'100%'}}>
+                    <button onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    className="check-out-button"
+                    type="submit"
+                    role="link"
+                    style={{
+                      width: "100%",
+                      padding: '5px',
+                      backgroundColor: isHovered ? `#${theme.dark}` : `#${theme.light}`,
+                      color: isHovered ? `#${theme.light}` : `#${theme.dark}`,
+                      transition: 'background-color 0.3s ease-in-out',
+                      border: `2px solid #${isHovered ? theme.light : theme.dark}`,
+                      borderRadius: '5px',
+                      boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+                      fontSize: '1rem',
+                      cursor: 'pointer'
+                    }}
+                    >
                       Checkout
                   </button>
+                  <button onMouseEnter={handleMouseEnter2}
+                    onMouseLeave={handleMouseLeave2}
+                    className="check-out-button"
+                    type="button"
+                    onClick={()=>navigate('/dashboard')}
+                    style={{
+                      width: "100%",
+                      padding: '5px',
+                      backgroundColor: isHovered2 ? `#${theme.dark}` : `#${theme.light}`,
+                      color: isHovered2 ? `#${theme.light}` : `#${theme.dark}`,
+                      transition: 'background-color 0.3s ease-in-out',
+                      border: `2px solid #${isHovered2 ? theme.light : theme.dark}`,
+                      borderRadius: '5px',
+                      boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+                      fontSize: '1rem',
+                      cursor: 'pointer'
+                    }}
+                    >
+                      Back
+                  </button>
+                  </div>
                 </form>
             </div>
         </section>

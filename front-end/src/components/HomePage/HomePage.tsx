@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../AppContext'
+import {useState, useEffect} from 'react'
 import UserObject from '../../utils/userObject'
 import login from '../../utils/login'
 import Hero from '../Hero/Hero'
@@ -11,8 +12,13 @@ import './test-button.css'
 
 
 const HomePage: React.FC = ({}) => {
+    const [buttonOpacity, setButtonOpacity] = useState(true)
     const {setUser} = useAppContext()
     const navigate = useNavigate()
+
+    useEffect(()=>{
+        setButtonOpacity(false)
+    },[])
 
     const handleLogin = async () => {
         try {
@@ -53,6 +59,7 @@ const HomePage: React.FC = ({}) => {
                     fontWeight: 900,
                     transition: 'background 0.3s ease-in-out, border-radius 0.3s ease-in-out, scale 0.2s ease-in-out, color 0.3s ease-in-out, border 0.2s ease-in-out',
                     color: 'white',
+                    opacity: buttonOpacity ? 0 : 100,
                 }}onClick={handleLogin}>Sign In With Test Account</button>
             </div>
         </div>

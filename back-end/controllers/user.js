@@ -229,7 +229,7 @@ module.exports = {
             const openai = new OpenAIApi(configuration)
             const response = await openai.createChatCompletion({
                 model: 'gpt-3.5-turbo',
-                messages: [{role: "user", content: `Write me a prompt for the DALL-E 2 api that captures the following: ${prompt}`}]
+                messages: [{role: "user", content: `Write me a prompt for DALL-E 2. Your response should not referenace DALL-E 2, and be less than 30 words. Capture the following: ${prompt}`}]
             })
             console.log(response.data)
             if (response.data){

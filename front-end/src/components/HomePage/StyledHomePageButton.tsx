@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 
 interface StyledHomePageButtonProps {
@@ -9,6 +9,11 @@ interface StyledHomePageButtonProps {
 
 const StyledHomePageButton: React.FC<StyledHomePageButtonProps> = ({text, link, isSignUp = false}) => {
     const [isHovered, setIsHovered] = useState(false)
+    const [buttonOpacity, setButtonOpacity] = useState(true)
+
+    useEffect(()=>{
+        setButtonOpacity(false)
+    },[])
 
     const handleMouseEnter = () => {
         setIsHovered(true)
@@ -35,6 +40,7 @@ const StyledHomePageButton: React.FC<StyledHomePageButtonProps> = ({text, link, 
                 borderRadius: isHovered ? '5px' : '25px',
                 scale: isHovered ? '1.1' : '1',
                 color: 'white',
+                opacity: buttonOpacity ? 0 : 100
             }}>
             {text}
         </a>

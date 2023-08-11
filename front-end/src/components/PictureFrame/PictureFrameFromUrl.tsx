@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react"
-import { useAppContext } from "../AppContext"
 import Loading from "../Loading/Loading"
-import Theme from "../../utils/themeProvider"
 
 interface PictureFrameFromUrlProps {
     url: string
@@ -10,11 +8,9 @@ interface PictureFrameFromUrlProps {
 }
 
 const PictureFrameFromUrl: React.FC<PictureFrameFromUrlProps> = ({ url, h, w }) => {
-    const {darkMode} = useAppContext()
     const [isLoading, setIsLoading] = useState(true)
     const [loadFade, setLoadFade] = useState(false)
     const [didRender, setDidRender] = useState<boolean>(false)
-    const [theme, setTheme] = useState<Theme>(new Theme(darkMode))
     const [imgUrl, setImgUrl] = useState("")
 
     useEffect(()=>{
@@ -22,13 +18,6 @@ const PictureFrameFromUrl: React.FC<PictureFrameFromUrlProps> = ({ url, h, w }) 
             setDidRender(true)
         }
     },[])
-
-    useEffect(()=> {
-        setTheme(new Theme(darkMode))
-        if (!theme){
-            console.log('TYPE SCRIPT')
-        }
-    }, [darkMode])
 
     useEffect(()=> {
         if (isLoading && !didRender) {

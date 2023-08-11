@@ -25,7 +25,7 @@ router.get('/generate', ensureAuth, (req, res) => {
     res.sendFile(path.join(__dirname, "../build", 'index.html'))
 })
 
-router.get('/shop', ensureAuth, (req, res) => {
+router.get('/shop', (req, res) => {
     res.sendFile(path.join(__dirname, "../build", 'index.html'))
 })
 

@@ -11,7 +11,6 @@ const genImage = async (id: number, prompt: string, n: number, size: string) => 
         n: n,
         size: setSides
     })
-    console.log("from genImg", response)
     return response
 }
 
