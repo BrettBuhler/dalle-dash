@@ -1,0 +1,130 @@
+.h-screen {
+    height: 100vh;
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center{
+    align-items: center;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.rounded-br-2xl {
+    border-bottom-right-radius: 1rem;
+}
+
+.rounded-tl-2xl {
+    border-top-left-radius: 1rem;
+}
+
+.border-8 {
+    border-width: 8px
+}
+
+.border-white {
+    border: white;
+}
+
+.bg-transparant {
+    background: transparent;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.p-4 {
+    padding: 1rem;
+}
+
+.p-2 {
+    padding: 0.5rem
+}
+
+.mb-4 {
+    margin-bottom: 1rem
+}
+
+.text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
+}
+
+.text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.text-white {
+    color: white
+}
+
+.text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+.text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+.top-0 {
+    top: 0px
+}
+
+.left-0 {
+    left: 0px
+}
+
+.w-full {
+    width: 100%;
+}
+
+.h-full {
+    height: 100%;
+}
+
+.bg-black {
+    background-color: black;
+}
+
+.opacity-50 {
+    opacity: 0.2;
+}
+
+.text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.pb-3 {
+    padding-bottom: 0.75rem
+}
+
+.pl-2 {
+    padding-left: 0.5rem;
+}
+
+.pr-2 {
+    padding-right: 0.5rem;
+}

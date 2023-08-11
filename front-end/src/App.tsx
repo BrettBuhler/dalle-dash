@@ -8,6 +8,7 @@ import GenerateImage from './components/GenerateImage/GenerateImage'
 import Shop from './components/Shop/Shop'
 import CommunityGallery from './components/Gallery/CommunityGallery'
 import MyGallery from './components/Gallery/MyGallery'
+import ImagePreloader from './components/Shop/ImagePreloader'
 import './index.css'
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
                 <Route path='/communitygallery' element={<CommunityGallery />} />
                 <Route path='/mygallery' element={<MyGallery />} />
             </Routes>
+            <ImagePreloader />
         </div>
     )
 }

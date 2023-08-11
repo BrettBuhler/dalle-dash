@@ -1,0 +1,19 @@
+.test-button {
+    background: #00CED1;
+    border: none;
+    border-radius: 25px;
+    font-size: 24px;
+}
+
+.test-button:hover{
+    background: #800080;
+    border-radius: 5px;
+    scale: 1.1;
+    cursor: pointer;
+}
+
+@media (max-width: 400px) {
+    .test-button {
+        font-size: 18px;
+    }
+}
