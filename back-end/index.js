@@ -32,7 +32,7 @@ app.use('/api', apiRoutes)
 app.use(stripeRoutes)
 
 
-app.use(express.static("build"))
+app.use(express.static("build", {maxAge: '1h'}))
 
 const port = process.env.PORT || 5000
 
