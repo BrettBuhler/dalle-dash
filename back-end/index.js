@@ -2,6 +2,7 @@ const express = require ("express")
 const session = require('express-session')
 const bodyParser = require('body-parser')
 require('dotenv').config()
+const crypto = require('crypto')
 const app = express()
 
 
@@ -32,7 +33,17 @@ app.use('/api', apiRoutes)
 app.use(stripeRoutes)
 
 
-app.use(express.static("build", {maxAge: '1h'}))
+app.use(express.static("build", {
+    maxAge: '1h',
+    setHeaders: (res, path) => {
+        if (path.endsWith('.js')) {
+            const version = '4950065f'; // Generate a unique identifier
+            const etag = crypto.createHash('md5').update(version).digest('hex');
+            res.setHeader('Cache-Control', 'public, max-age=3600');
+            res.setHeader('ETag', etag);
+        }
+    }
+}));
 
 const port = process.env.PORT || 5000
 

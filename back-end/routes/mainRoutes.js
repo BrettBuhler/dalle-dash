@@ -9,11 +9,11 @@ router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "../build", "index.html"))
 })
 
-router.get("/login", (req, res) => {
+router.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, '../build', 'index.html'))
 })
 
-router.get("/signup", (req, res) => {
+router.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, '../build', 'index.html'))
 })
 
